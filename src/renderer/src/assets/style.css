@@ -36,3 +36,7 @@ a {
 a:hover {
   border-bottom: 1px solid;
 }
+
+.card {
+  background-color: rebeccapurple;
+}

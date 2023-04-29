@@ -1,15 +1,15 @@
 import { OpenAI } from 'langchain/llms/openai'
 
 /**
- * The LangChain class acts as a singleton wrapper around the OpenAI model.
+ * The LangChainModel class acts as a singleton wrapper around the OpenAI model.
  * It ensures there is only one instance of the model running and provides access to it.
  */
-class LangChain {
-  private static instance: LangChain
+class LangChainModel {
+  private static instance: LangChainModel
   private model: OpenAI
 
   /**
-   * Initializes the LangChain instance with an OpenAI model.
+   * Initializes the LangChainModel instance with an OpenAI model.
    * @param {string} OPENAI_API_KEY - API Key for OpenAI
    * @private
    */
@@ -19,36 +19,36 @@ class LangChain {
   }
 
   /**
-   * Initializes the LangChain singleton instance.
+   * Initializes the LangChainModel singleton instance.
    * @param {string} OPENAI_API_KEY - API Key for OpenAI
    * @public
    */
   public static init(OPENAI_API_KEY: string): void {
-    if (!LangChain.instance) {
-      LangChain.instance = new LangChain(OPENAI_API_KEY)
+    if (!LangChainModel.instance) {
+      LangChainModel.instance = new LangChainModel(OPENAI_API_KEY)
     }
   }
 
   /**
-   * Returns the LangChain singleton instance.
+   * Returns the LangChainModel singleton instance.
    * Throws an error if the instance has not been initialized.
-   * @returns {LangChain} The singleton instance of LangChain
+   * @returns {LangChainModel} The singleton instance of LangChainModel
    * @public
    */
-  public static getInstance(): LangChain {
-    LangChain.validateLangChain()
-    return LangChain.instance
+  public static getInstance(): LangChainModel {
+    LangChainModel.validateLangChainModel()
+    return LangChainModel.instance
   }
 
   /**
-   * Returns the OpenAI model associated with the LangChain singleton instance.
+   * Returns the OpenAI model associated with the LangChainModel singleton instance.
    * Throws an error if the instance has not been initialized.
    * @returns {OpenAI} The OpenAI model instance
    * @public
    */
   public static getModel(): OpenAI {
-    LangChain.validateLangChain()
-    return LangChain.instance.model
+    LangChainModel.validateLangChainModel()
+    return LangChainModel.instance.model
   }
 
   /**
@@ -63,14 +63,14 @@ class LangChain {
   }
 
   /**
-   * Validates if the LangChain instance has been initialized.
+   * Validates if the LangChainModel instance has been initialized.
    * Throws an error if the instance has not been initialized.
-   * @throws {Error} If the LangChain instance has not been initialized
+   * @throws {Error} If the LangChainModel instance has not been initialized
    * @private
    */
-  private static validateLangChain(): void {
-    if (!LangChain.instance) throw new Error('LangChain instance not initialized');
+  private static validateLangChainModel(): void {
+    if (!LangChainModel.instance) throw new Error('LangChainModel instance not initialized');
   }
 }
 
-export { LangChain }
+export { LangChainModel }
