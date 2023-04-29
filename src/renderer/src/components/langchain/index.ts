@@ -9,17 +9,29 @@ class LangChain {
     this.model = model
   }
 
-  public static getInstance(OPENAI_API_KEY?: string): LangChain {
-    if (!OPENAI_API_KEY) return LangChain.instance
+  public static init(OPENAI_API_KEY: string): void {
     if (!LangChain.instance) {
       LangChain.instance = new LangChain(OPENAI_API_KEY)
     }
+  }
+
+  public static getInstance(): LangChain {
+    LangChain.validateLangChain()
     return LangChain.instance
+  }
+
+  public static getModel(): OpenAI {
+    LangChain.validateLangChain()
+    return LangChain.instance.model
   }
 
   public async complete(prompt: string): Promise<string> {
     const completion = await this.model.call(prompt)
     return completion
+  }
+
+  private static validateLangChain(): void {
+    if (!LangChain.instance) throw new Error('LangChain instance not initialized');
   }
 }
 

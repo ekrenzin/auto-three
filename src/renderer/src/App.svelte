@@ -1,10 +1,16 @@
 <script lang="ts">
   import { LangChain } from './components/langchain/index'
+  import { onMount } from 'svelte'
+  
   let text = ''
 
-  async function submitText() {
+  onMount(async () => {
     const api_key = await window.electron.ipcRenderer.invoke('open-ai-key')
-    const model = LangChain.getInstance(api_key)
+    LangChain.init(api_key)
+  })
+
+  async function submitText() {
+    const model = LangChain.getModel()
     console.log(model)
   }
 </script>
