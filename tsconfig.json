@@ -7,6 +7,8 @@
     "src/preload/*.d.ts"
   ],
   "compilerOptions": {
+    "target": "ES2020", // or higher
+    "module": "nodenext",
     "importsNotUsedAsValues": "error",
     "preserveValueImports": true,
     "useDefineForClassFields": true,
