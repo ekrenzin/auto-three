@@ -5,10 +5,8 @@
     "src/renderer/src/**/*",
     "src/renderer/src/**/*.svelte",
     "src/preload/*.d.ts"
-  ],
+, "src/renderer/src/components/langchain"  ],
   "compilerOptions": {
-    "target": "ES2020", // or higher
-    "module": "nodenext",
     "importsNotUsedAsValues": "error",
     "preserveValueImports": true,
     "useDefineForClassFields": true,

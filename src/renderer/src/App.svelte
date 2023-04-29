@@ -1,9 +1,11 @@
 <script lang="ts">
+  import { LangChain } from './components/langchain/index'
   let text = ''
 
-  function submitText() {
-    const { ipcRenderer } = window.electron
-    ipcRenderer.invoke('test', text)
+  async function submitText() {
+    const api_key = await window.electron.ipcRenderer.invoke('open-ai-key')
+    const model = LangChain.getInstance(api_key)
+    console.log(model)
   }
 </script>
 
