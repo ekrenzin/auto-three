@@ -1,4 +1,5 @@
 import { OpenAI } from 'langchain/llms/openai'
+import { OpenAIEmbeddings } from 'langchain/embeddings/openai'
 
 /**
  * The LangChainModel class acts as a singleton wrapper around the OpenAI model.
@@ -7,6 +8,7 @@ import { OpenAI } from 'langchain/llms/openai'
 class LangChainModel {
   private static instance: LangChainModel
   private model: OpenAI
+  private embeddings: OpenAIEmbeddings;
 
   /**
    * Initializes the LangChainModel instance with an OpenAI model.
@@ -15,6 +17,8 @@ class LangChainModel {
    */
   private constructor(OPENAI_API_KEY: string) {
     const model = new OpenAI({ openAIApiKey: OPENAI_API_KEY, temperature: 0.9 })
+    const embeddings = new OpenAIEmbeddings({ openAIApiKey: OPENAI_API_KEY })
+    this.embeddings = embeddings
     this.model = model
   }
 
@@ -49,6 +53,17 @@ class LangChainModel {
   public static getModel(): OpenAI {
     LangChainModel.validateLangChainModel()
     return LangChainModel.instance.model
+  }
+
+  /**
+   * Returns the openAI Embeddings associated with the LangChainModel singleton instance.
+   * Throws an error if the instance has not been initialized.
+   * @returns {OpenAIEmbeddings} The OpenAI embeddings instance
+   * @public
+    */
+  public static getEmbeddings(): OpenAIEmbeddings {
+    LangChainModel.validateLangChainModel()
+    return LangChainModel.instance.embeddings
   }
 
   /**

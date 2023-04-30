@@ -1,34 +1,14 @@
 import type {OpenAI} from "langchain/llms/openai";
-import { initializeAgentExecutorWithOptions } from "langchain/agents";
-import { DynamicTool } from "langchain/tools";
+import type { OpenAIEmbeddings } from "langchain/embeddings/openai";
+import { WebBrowser } from "langchain/tools/webbrowser";
 
-export const run = async (model: OpenAI) => {
-  const tools = [
-    new DynamicTool({
-      name: "FOO",
-      description:
-        "call this to get the value of foo. input should be an empty string.",
-      func: async () => "baz",
-    }),
-    new DynamicTool({
-      name: "BAR",
-      description:
-        "call this to get the value of bar. input should be an empty string.",
-      func: async () => "baz1",
-    }),
-  ];
+export const run = async (model: OpenAI, embeddings: OpenAIEmbeddings) => {
+  console.log("Running agent", model);
+  const browser = new WebBrowser({ model, embeddings });
 
-  const executor = await initializeAgentExecutorWithOptions(tools, model, {
-    agentType: "zero-shot-react-description",
-  });
+  const result = await browser.call(
+    `"https://www.themarginalian.org/2015/04/09/find-your-bliss-joseph-campbell-power-of-myth","who is joseph campbell"`
+  );
 
-  console.log("Loaded agent.");
-
-  const input = `What is the value of foo?`;
-
-  console.log(`Executing with input "${input}"...`);
-
-  const result = await executor.call({ input });
-
-  console.log(`Got output ${result.output}`);
+  console.log(result);
 };
